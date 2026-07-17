@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sharwil Rajurwar — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0A0C;
+    --panel:#111114;
+    --panel-2:#151519;
+    --ink:#F3F3EF;
+    --muted:#9A9AA1;
+    --muted-dim:#6C6C73;
+    --accent:#E5383B;
+    --accent-dim:rgba(229,56,59,0.35);
+    --accent-glow:rgba(229,56,59,0.45);
+    --line:rgba(243,243,239,0.10);
+    --line-strong:rgba(243,243,239,0.18);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;scroll-padding-top:24px;}
+  section[id]{scroll-margin-top:24px;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(229,56,59,0.14), transparent 60%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--accent);color:#0A0A0C;}
+  a{color:var(--ink);}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;position:relative;z-index:1;}
+  .display{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:0.01em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .accent-txt{color:var(--accent);}
+
+  /* NAV — pill style */
+  .navbar{position:sticky;top:16px;z-index:60;display:flex;justify-content:center;padding:0 20px;}
+  .pill-nav{
+    width:100%;max-width:1080px;
+    background:rgba(17,17,20,0.75);
+    backdrop-filter:blur(14px);
+    border:1px solid var(--line-strong);
+    border-radius:100px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 12px 10px 24px;
+  }
+  .brand{font-family:'Anton',sans-serif;font-size:18px;letter-spacing:0.04em;}
+  .nav-links{display:flex;align-items:center;gap:22px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.06em;}
+  .nav-links a{text-decoration:none;color:var(--muted);text-transform:uppercase;transition:color .2s;position:relative;padding-bottom:14px;}
+  .nav-links a:hover, .nav-links a.active{color:var(--ink);}
+  .nav-links a.active::after{content:'';position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent-glow);}
+  .nav-cta{
+    width:38px;height:38px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--ink);color:var(--bg);
+    text-decoration:none;font-size:14px;
+  }
+  @media (max-width:760px){ .nav-links{display:none;} }
+
+  /* HERO */
+  .hero{padding:90px 0 40px;text-align:center;position:relative;}
+  .eyebrow-pill{
+    display:inline-flex;align-items:center;gap:8px;
+    border:1px solid var(--line-strong);border-radius:100px;
+    padding:7px 16px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.1em;
+    color:var(--muted);text-transform:uppercase;margin-bottom:26px;
+  }
+  .eyebrow-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent-glow);}
+  .hero h1{font-size:clamp(56px,13vw,150px);line-height:0.92;}
+  .hero-photo{position:relative;width:min(280px,60vw);height:min(340px,70vw);margin:0 auto;z-index:1;perspective:800px;animation:photoFloat 4.5s ease-in-out infinite;}
+  .hero-photo-glow{
+    position:absolute;inset:-30px;z-index:-1;border-radius:50%;
+    background:radial-gradient(circle, rgba(229,56,59,0.55), rgba(229,56,59,0.15) 55%, transparent 75%);
+    filter:blur(30px);
+    animation:speakGlow 1.8s ease-in-out infinite;
+  }
+  @keyframes speakGlow{
+    0%{opacity:0.55;transform:scale(1);}
+    18%{opacity:0.95;transform:scale(1.07);}
+    32%{opacity:0.6;transform:scale(0.98);}
+    48%{opacity:1;transform:scale(1.1);}
+    65%{opacity:0.65;transform:scale(1.01);}
+    80%{opacity:0.9;transform:scale(1.06);}
+    100%{opacity:0.55;transform:scale(1);}
+  }
+  .voice-ring{
+    position:absolute;inset:-8px;border-radius:20px;pointer-events:none;
+    border:2px solid var(--accent);opacity:0;
+    animation:voiceRing 1.8s ease-out infinite;
+  }
+  @keyframes voiceRing{
+    0%{opacity:0.7;transform:scale(1);}
+    100%{opacity:0;transform:scale(1.12);}
+  }
+  .hero-photo-inner{
+    width:100%;height:100%;border-radius:20px;overflow:hidden;position:relative;
+    box-shadow:0 20px 50px -15px rgba(0,0,0,0.6), 0 0 0 1px var(--line-strong);
+    transform-style:preserve-3d;
+    transition:transform .15s ease-out;
+  }
+  @keyframes photoFloat{
+    0%,100%{transform:translateY(0) rotate(-0.6deg);}
+    50%{transform:translateY(-10px) rotate(0.6deg);}
+  }
+  .hero-photo img{
+    width:100%;height:100%;object-fit:cover;object-position:top center;
+    display:block;
+  }
+  .hero-photo-shimmer{
+    position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(115deg, transparent 35%, rgba(255,255,255,0.18) 48%, transparent 60%);
+    background-size:220% 220%;
+    animation:shimmerSweep 3.6s ease-in-out infinite;
+    mix-blend-mode:overlay;
+  }
+  @keyframes shimmerSweep{
+    0%{background-position:130% 0%;}
+    100%{background-position:-30% 100%;}
+  }
+  .waveform{
+    position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+    display:flex;align-items:flex-end;gap:3px;height:22px;z-index:3;
+    padding:6px 10px;background:rgba(10,10,12,0.55);backdrop-filter:blur(6px);border-radius:100px;
+  }
+  .waveform span{
+    width:3px;background:var(--accent);border-radius:2px;
+    animation:wbar 0.9s ease-in-out infinite;
+  }
+  .waveform span:nth-child(1){height:6px;animation-delay:0s;animation-duration:0.7s;}
+  .waveform span:nth-child(2){height:14px;animation-delay:.1s;animation-duration:0.9s;}
+  .waveform span:nth-child(3){height:20px;animation-delay:.2s;animation-duration:0.6s;}
+  .waveform span:nth-child(4){height:10px;animation-delay:.15s;animation-duration:0.8s;}
+  .waveform span:nth-child(5){height:16px;animation-delay:.3s;animation-duration:0.75s;}
+  @keyframes wbar{
+    0%,100%{transform:scaleY(0.4);}
+    50%{transform:scaleY(1);}
+  }
+  .hero-name{position:relative;z-index:2;}
+  .hero .year-tag{
+    position:absolute;top:100px;right:0;
+    font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted-dim);
+    writing-mode:vertical-rl;letter-spacing:0.1em;
+  }
+  .hero p.lede{color:var(--muted);max-width:560px;margin:26px auto 0;font-size:16px;line-height:1.75;}
+  .hero-cta{display:flex;gap:14px;justify-content:center;margin-top:34px;flex-wrap:wrap;}
+  .btn{
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase;
+    padding:13px 26px;border-radius:100px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+    transition:transform .2s, background .2s;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-solid{background:var(--accent);color:#fff;}
+  .btn-outline{border:1px solid var(--line-strong);color:var(--ink);}
+
+  section{padding:70px 0;}
+  .section-tag{
+    display:block;text-align:center;margin:0 auto 20px;width:fit-content;
+    border:1px solid var(--line-strong);border-radius:100px;padding:6px 16px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.12em;color:var(--accent);text-transform:uppercase;
+  }
+  .section-title{text-align:center;font-size:clamp(34px,6vw,58px);}
+  .section-sub{text-align:center;color:var(--muted);max-width:600px;margin:18px auto 0;font-size:15.5px;line-height:1.7;}
+
+  /* TABS */
+  .tabs{display:flex;justify-content:center;gap:6px;margin:40px auto 0;border:1px solid var(--line);border-radius:100px;padding:5px;width:fit-content;}
+  .tab-btn{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;
+    background:none;border:none;color:var(--muted);padding:10px 20px;border-radius:100px;cursor:pointer;transition:color .2s, background .2s;
+  }
+  .tab-btn.active{color:var(--ink);background:var(--panel-2);}
+  .tab-panel{display:none;margin-top:36px;}
+  .tab-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
+  .tab-col{background:var(--panel);padding:28px 30px;}
+  .tab-col .tc-h{font-family:'Anton',sans-serif;font-size:15px;letter-spacing:0.03em;color:var(--ink);text-transform:uppercase;}
+  .tab-col ul{list-style:none;margin:16px 0 0;padding:0;}
+  .tab-col li{color:var(--muted);font-size:13.5px;line-height:1.7;padding:7px 0;border-bottom:1px dashed var(--line);}
+  .tab-col li b{color:var(--ink);font-weight:600;}
+  @media (max-width:720px){ .tab-panel.active{grid-template-columns:1fr;} }
+
+  /* PROJECT CARDS */
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:50px;}
+  .card{background:var(--panel);padding:34px 30px;position:relative;overflow:hidden;transition:background .3s;}
+  .card:hover{background:var(--panel-2);}
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;}
+  .icon-box{width:44px;height:44px;border-radius:10px;background:rgba(229,56,59,0.12);border:1px solid var(--accent-dim);display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;color:var(--accent);font-size:18px;}
+  .role-tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;}
+  .card h3{font-size:24px;margin-top:2px;}
+  .card .sub{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted-dim);letter-spacing:0.06em;text-transform:uppercase;margin-top:4px;}
+  .card p{color:var(--muted);font-size:14px;line-height:1.75;margin-top:16px;}
+  .scope-label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.1em;color:var(--muted-dim);text-transform:uppercase;margin-top:22px;border-top:1px solid var(--line);padding-top:16px;}
+  .scope-list{list-style:none;margin:12px 0 0;padding:0;}
+  .scope-list li{font-size:13px;color:var(--muted);line-height:1.65;padding:6px 0;padding-left:16px;position:relative;}
+  .scope-list li::before{content:'';position:absolute;left:0;top:12px;width:6px;height:6px;border-radius:50%;background:var(--accent);}
+  .scope-list b{color:var(--ink);font-weight:600;}
+  .card-links{margin-top:20px;display:flex;gap:20px;}
+  .card-links a{font-family:'IBM Plex Mono',monospace;font-size:12px;text-decoration:none;color:var(--accent);border-bottom:1px solid var(--accent-dim);padding-bottom:2px;}
+  @media (max-width:820px){ .cards{grid-template-columns:1fr;} }
+
+  /* ROADMAP */
+  .roadmap{margin-top:50px;}
+  .rline{display:grid;grid-template-columns:60px 1fr;gap:22px;position:relative;padding-bottom:32px;}
+  .rline:not(:last-child)::before{content:'';position:absolute;left:29px;top:34px;bottom:0;width:1px;background:var(--line);}
+  .rnum{font-family:'Anton',sans-serif;font-size:14px;color:#fff;background:var(--muted-dim);width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0;}
+  .rnum.done{background:var(--accent);}
+  .rtext .rt-h{font-family:'Anton',sans-serif;font-size:17px;letter-spacing:0.02em;text-transform:uppercase;}
+  .rtext .rt-s{color:var(--muted);font-size:13.5px;margin-top:6px;line-height:1.6;}
+
+  /* CONTACT — flashy */
+  #contact{position:relative;overflow:hidden;}
+  #contact::before{
+    content:'';position:absolute;inset:-20% -10%;z-index:0;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(229,56,59,0.22), transparent 45%),
+      radial-gradient(circle at 75% 70%, rgba(229,56,59,0.14), transparent 50%);
+    animation:contactglow 6s ease-in-out infinite alternate;
+    pointer-events:none;
+  }
+  @keyframes contactglow{0%{opacity:0.6;transform:scale(1);}100%{opacity:1;transform:scale(1.06);}}
+  .contact-block{text-align:center;padding:90px 0;position:relative;z-index:1;}
+  .contact-block h2{font-size:clamp(32px,7vw,64px);max-width:760px;margin:0 auto;line-height:1.08;text-shadow:0 0 40px rgba(229,56,59,0.25);}
+  .contact-links{margin-top:38px;display:flex;flex-wrap:wrap;gap:16px;justify-content:center;}
+  .contact-links .btn-outline{transition:box-shadow .25s, border-color .25s, transform .2s;}
+  .contact-links .btn-outline:hover{border-color:var(--accent);box-shadow:0 0 22px rgba(229,56,59,0.25);transform:translateY(-2px);}
+
+  .email-reveal{
+    position:relative;text-decoration:none;display:inline-flex;align-items:center;
+    font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:0.04em;
+    padding:13px 26px;border-radius:100px;border:none;cursor:pointer;
+    background:linear-gradient(120deg, var(--accent), #ff6b5e);
+    color:#fff;box-shadow:0 0 24px rgba(229,56,59,0.4);
+    transition:transform .2s, box-shadow .2s;
+  }
+  .email-reveal:hover{transform:translateY(-2px);box-shadow:0 0 34px rgba(229,56,59,0.6);}
+
+  .contact-phone{margin-top:26px;font-size:14px;color:var(--muted);letter-spacing:0.02em;}
+  .contact-phone .lbl{color:var(--muted-dim);text-transform:uppercase;font-size:11px;letter-spacing:0.1em;margin-right:10px;}
+  .contact-phone a{color:var(--ink);text-decoration:none;font-family:'IBM Plex Mono',monospace;border-bottom:1px dashed var(--accent-dim);padding-bottom:2px;}
+  .contact-phone a:hover{color:var(--accent);}
+
+  footer{padding:34px 4px 60px;color:var(--muted-dim);font-family:'IBM Plex Mono',monospace;font-size:11.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;max-width:1080px;margin:0 auto;}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <section class="hero" id="home">
+    <div class="eyebrow-pill"><span class="dot"></span> Student Engineer · MIT-ADT Pune</div>
+    <h1 class="display hero-name">Sharwil<br><span class="accent-txt">Rajurwar</span></h1>
+    <div class="year-tag">[2029]</div>
+    <p class="lede">First-year B.Tech CSE student building real, shipped systems — a fraud-detection web app and an AI desktop companion — while working toward Full Stack Developer and Forward Deployed Engineer roles.</p>
+    <div class="hero-cta">
+      <a href="http://intern-veritas.vercel.app/" target="_blank" rel="noopener" class="btn btn-solid">View Work ↗</a>
+      <a href="#contact" class="btn btn-outline">Get In Touch</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <span class="section-tag">Build Philosophy</span>
+    <h2 class="section-title display">About <span class="accent-txt">Me</span></h2>
+    <p class="section-sub">Architecture before implementation. I'd rather spend a week on a spec than a month rebuilding something that was never designed to scale.</p>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="approach">The Approach</button>
+      <button class="tab-btn" data-tab="stack">The Stack</button>
+      <button class="tab-btn" data-tab="targets">The Targets</button>
+    </div>
+
+    <div class="tab-panel active" id="tab-approach">
+      <div class="tab-col">
+        <div class="tc-h">How I Build</div>
+        <ul>
+          <li><b>Spec first:</b> full architecture and requirements written before implementation code.</li>
+          <li><b>Ship the whole thing:</b> auth, deployment, and the unglamorous paperwork — not just the demo path.</li>
+        </ul>
+      </div>
+      <div class="tab-col">
+        <div class="tc-h">Where I Am</div>
+        <ul>
+          <li><b>Sem 3:</b> Advanced Python, with DSA as the current priority gap.</li>
+          <li><b>Completed:</b> C (Sem 1), Python (Sem 2).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tab-stack">
+      <div class="tab-col">
+        <div class="tc-h">Languages</div>
+        <ul>
+          <li><b>Current:</b> C, Python</li>
+          <li><b>Learning next:</b> Rust, Go</li>
+        </ul>
+      </div>
+      <div class="tab-col">
+        <div class="tc-h">Shipped With</div>
+        <ul>
+          <li><b>Web:</b> React, TypeScript, Node.js, Supabase</li>
+          <li><b>Desktop / AI:</b> Python, PySide6, QWebEngineView</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tab-targets">
+      <div class="tab-col">
+        <div class="tc-h">Full Stack Developer</div>
+        <ul>
+          <li><b>Why:</b> already shipping full-stack — React front end, Node back end, Supabase, real deployment.</li>
+        </ul>
+      </div>
+      <div class="tab-col">
+        <div class="tc-h">Forward Deployed Engineer</div>
+        <ul>
+          <li><b>Why:</b> want to sit close to a real problem and build the tool it actually needs, not just ship features.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <span class="section-tag">Selected Work</span>
+    <h2 class="section-title display">Things I've <span class="accent-txt">Built</span></h2>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-top">
+          <div>
+            <div class="role-tag">Role 01 · Shipped</div>
+            <h3>InternVeritas</h3>
+            <div class="sub">Fraud Detector &amp; Trust Scorer</div>
+          </div>
+          <div class="icon-box">IV</div>
+        </div>
+        <p>Screens internship and job postings for fraud signals before a student applies — AI analysis across six risk factors, cross-checked against live company search, WHOIS, and email-domain verification.</p>
+        <div class="scope-label">System Scope</div>
+        <ul class="scope-list">
+          <li><b>Trust scoring:</b> six-factor AI risk analysis plus rule-based detection.</li>
+          <li><b>Verification:</b> Serper company search, WHOIS, email-domain checks.</li>
+          <li><b>Full product:</b> auth, history, and a deployed front end + back end.</li>
+        </ul>
+        <div class="card-links"><a href="http://intern-veritas.vercel.app/" target="_blank" rel="noopener">View Live →</a><a href="https://github.com/Sharwil1204/InternVeritas" target="_blank" rel="noopener">View on GitHub →</a></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div>
+            <div class="role-tag">Role 02 · In Build</div>
+            <h3>SERA V4</h3>
+            <div class="sub">AI Desktop Companion</div>
+          </div>
+          <div class="icon-box">SV</div>
+        </div>
+        <p>An AI desktop companion built architecture-first — a full spec (Foundation Constitution, SRS, ~250-page technical architecture) was written before any implementation code.</p>
+        <div class="scope-label">System Scope</div>
+        <ul class="scope-list">
+          <li><b>Orb renderer:</b> audio-reactive visual engine, 130/130 tests passing.</li>
+          <li><b>Chat UI:</b> locked interface with mood-reactive visuals.</li>
+          <li><b>Next:</b> conversation engine → memory → wake-word awareness.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <span class="section-tag">The Path</span>
+    <h2 class="section-title display">Where This <span class="accent-txt">Goes</span></h2>
+    <div class="roadmap">
+      <div class="rline"><div class="rnum done">1</div><div class="rtext"><div class="rt-h">Foundations — C, Python</div><div class="rt-s">Sem 1–2, complete.</div></div></div>
+      <div class="rline"><div class="rnum">2</div><div class="rtext"><div class="rt-h">Advanced Python + DSA</div><div class="rt-s">Sem 3, in progress — DSA is the current priority gap.</div></div></div>
+      <div class="rline"><div class="rnum">3</div><div class="rtext"><div class="rt-h">Full-stack + AI/ML depth</div><div class="rt-s">Build breadth across the stack while going deeper on AI/ML fundamentals.</div></div></div>
+      <div class="rline"><div class="rnum">4</div><div class="rtext"><div class="rt-h">Internships</div><div class="rt-s">Targeting programs aligned with the 2027–28 graduation window.</div></div></div>
+      <div class="rline"><div class="rnum">5</div><div class="rtext"><div class="rt-h">Full Stack Dev / Forward Deployed Engineer</div><div class="rt-s">Two live targets — whichever door opens first, both play to the same strengths.</div></div></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-block">
+      <span class="section-tag">Get In Touch</span>
+      <h2 class="display">Let's build<br>something <span class="accent-txt">real</span>.</h2>
+      <div class="contact-links">
+        <a href="https://github.com/Sharwil1204" target="_blank" rel="noopener" class="btn btn-outline">GitHub</a>
+        <a href="https://www.linkedin.com/in/sharwil-rajurwar-926945385/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn</a>
+        <a href="mailto:sharwilrajurwar@gmail.com" class="email-reveal">Email</a>
+      </div>
+      <div class="contact-phone">
+        <span class="lbl">Contact No.</span><a href="tel:+919373074723">+91 93730 74723</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Sharwil Rajurwar</span>
+    <span class="mono">MIT-ADT University · Pune, IN</span>
+  </footer>
+
+</div>
+
+<script>
+  const heroInner = document.querySelector('.hero-photo-inner');
+  if(heroInner && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.addEventListener('mousemove', (e)=>{
+      const rect = heroInner.getBoundingClientRect();
+      const cx = rect.left + rect.width/2;
+      const cy = rect.top + rect.height/2;
+      const dx = (e.clientX - cx) / rect.width;
+      const dy = (e.clientY - cy) / rect.height;
+      const tiltX = (-dy * 10).toFixed(2);
+      const tiltY = (dx * 10).toFixed(2);
+      heroInner.style.transform = 'rotateX('+tiltX+'deg) rotateY('+tiltY+'deg)';
+    });
+  }
+
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = [...document.querySelectorAll('section[id]')];
+  const io2 = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        navLinks.forEach(a=>a.classList.remove('active'));
+        const match = document.querySelector('.nav-links a[href="#'+e.target.id+'"]');
+        if(match) match.classList.add('active');
+      }
+    });
+  }, {threshold:0.4});
+  sections.forEach(s=>io2.observe(s));
+
+  const els = document.querySelectorAll('.hero, #about, #work, #roadmap, .contact-block');
+  els.forEach(el => el.classList.add('reveal'));
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.08});
+  els.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
